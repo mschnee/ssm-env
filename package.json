@@ -1,0 +1,24 @@
+{
+  "name": "ssm-env",
+  "version": "1.0.0",
+  "description": "Get your environment variables from SSM",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.404.0",
+    "dotenv": "^6.2.0",
+    "typescript": "^3.3.3",
+    "yargs": "^13.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^11.9.4",
+    "@types/yargs": "^12.0.9"
+  },
+  "bin": {
+    "ssm-env": "./dist/index.js"
+  }
+}
