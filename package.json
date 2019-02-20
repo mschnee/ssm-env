@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.404.0",
+    "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",
     "typescript": "^3.3.3",
     "yargs": "^13.2.0"

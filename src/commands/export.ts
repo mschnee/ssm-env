@@ -1,85 +1,20 @@
 import * as AWS from 'aws-sdk';
 
-async function describeAllParameters(ssm: AWS.SSM, filters: AWS.SSM.ParameterStringFilterList): Promise<AWS.SSM.ParameterMetadata[]> {
-    let result = await ssm.describeParameters({
-        ParameterFilters: filters
-    }).promise()
+import getParamsForPathArray from '../lib/get-params-for-path-array';
+import getSsm from '../lib/get-ssm';
+import getPaths from '../lib/get-parameter-paths';
 
-    if (result.NextToken) {
-        let rset = result.Parameters.slice();
-        while(result.NextToken) {
-            result = await ssm.describeParameters({
-                ParameterFilters: filters,
-                NextToken: result.NextToken,
-            }).promise()
-            rset = rset.concat(result.Parameters);
-        }
+export default async function exportEnv(argv: any) {
+    const ssm = getSsm(argv);
 
-        return rset;
-    } else {
-        return result.Parameters;
-    }
-}
-
-async function getParameterValues(ssm: AWS.SSM, names: string[]): Promise<AWS.SSM.Parameter[]> {
-    let results: AWS.SSM.Parameter[] = [];
-    for (let i = 0; i < names.length; i += 10) {
-        console.log(`Getting ${i}-${i+10} of ${names.length}`);
-
-        const response = await ssm.getParameters({
-            Names: names.slice(i, i+10),
-            WithDecryption: true,
-        }).promise();
-
-        results = results.concat(response.Parameters);
-    }
-
-    return results;
-}
-
-export default async function exec(argv: any) {
-    const ssm = new AWS.SSM({
-        region: argv.awsRegion,
-        accessKeyId: argv.awsAccessKeyId,
-        secretAccessKey: argv.awsSecredAccessKey,
-        endpoint: argv.awsEndpoint || undefined
-    });
-
-    const paths = argv._;
-    if (paths[0] === 'export') {
-        paths.shift();
-    }
+    const paths = getPaths(argv);
 
     if(!paths || !paths.length) {
         console.error('Missing prefix paths');
         return;
     }
-    const varsOverEnv = process.env;
-    const newVarsOnly = {};
 
-    const [resultVarsOverEnv, resultNewVars] = await paths.reduce((pr, path) => pr.then(async ([allVars, newVars])=> {
-        const requested = await describeAllParameters(ssm, [
-            {
-                Key: 'Name',
-                Option: 'BeginsWith',
-                Values: [path]
-            }
-        ]);
-
-        const names = requested.map(r => r.Name);
-
-        const params = await getParameterValues(ssm, names);
-
-        params.forEach(p => {
-            if (!newVars.hasOwnProperty(p.Name)) {
-                newVars[p.Name] = p.Value
-            }
-            if (!allVars.hasOwnProperty(p.Name)) {
-                allVars[p.Name] = p.Value
-            }
-        });
-        return [allVars, newVars];
-    }),Promise.resolve([varsOverEnv, newVarsOnly]));
+    const [resultVarsOverEnv, resultNewVars] = await getParamsForPathArray(ssm, paths);
 
     const resultVars = argv.newEnv ? resultNewVars : resultVarsOverEnv;
     writeDotenv(resultVars);
