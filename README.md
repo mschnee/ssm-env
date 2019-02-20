@@ -1,7 +1,7 @@
 ssm-env
 =======
 
-A very simple cross-env-like utility for running a program with and environment enriched from AWS SSM ParameterStore values.
+A very simple `cross-env`-like utility for running a program with and environment enriched from AWS SSM ParameterStore values.
 
 With `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` already in your environment, or in a `.env` file:
 
