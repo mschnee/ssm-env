@@ -2,22 +2,26 @@
   "name": "ssm-env",
   "version": "1.0.0",
   "description": "Get your environment variables from SSM",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p ."
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mschnee/ssm-env.git"
+  },
+  "author": "mschnee <matthew.schnee@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.404.0",
     "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",
-    "typescript": "^3.3.3",
     "yargs": "^13.2.0"
   },
   "devDependencies": {
     "@types/node": "^11.9.4",
-    "@types/yargs": "^12.0.9"
+    "@types/yargs": "^12.0.9",
+    "typescript": "^3.3.3"
   },
   "bin": {
     "ssm-env": "./dist/index.js"
