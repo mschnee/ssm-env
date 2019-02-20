@@ -23,18 +23,17 @@ export default async function exportEnv(argv: any, command: string[]) {
             env: resultVarsOverEnv,
         },
     );
-    process.on('SIGTERM', () => proc.kill('SIGTERM'))
-    process.on('SIGINT', () => proc.kill('SIGINT'))
-    process.on('SIGBREAK', () => proc.kill('SIGBREAK'))
-    process.on('SIGHUP', () => proc.kill('SIGHUP'))
+    process.on('SIGTERM', () => proc.kill('SIGTERM'));
+    process.on('SIGINT', () => proc.kill('SIGINT'));
+    process.on('SIGBREAK', () => proc.kill('SIGBREAK'));
+    process.on('SIGHUP', () => proc.kill('SIGHUP'));
+
     proc.on('exit', (code, signal) => {
-        let crossEnvExitCode = code
-        // exit code could be null when OS kills the process(out of memory, etc) or due to node handling it
-        // but if the signal is SIGINT the user exited the process so we want exit code 0
+        let crossEnvExitCode = code;
         if (crossEnvExitCode === null) {
-            crossEnvExitCode = signal === 'SIGINT' ? 0 : 1
+            crossEnvExitCode = signal === 'SIGINT' ? 0 : 1;
         }
-        process.exit(crossEnvExitCode) //eslint-disable-line no-process-exit
+        process.exit(crossEnvExitCode);
     });
 
     return proc;

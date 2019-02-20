@@ -13,10 +13,10 @@
   "author": "mschnee <matthew.schnee@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.404.0",
+    "aws-sdk": "^2.407.0",
     "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",
-    "yargs": "^13.2.0"
+    "yargs": "^13.2.1"
   },
   "devDependencies": {
     "@types/node": "^11.9.4",
@@ -24,6 +24,10 @@
     "typescript": "^3.3.3"
   },
   "bin": {
-    "ssm-env": "./dist/index.js"
-  }
+    "ssm-env": "./cli.js"
+  },
+  "files": [
+    "dist",
+    "cli.js"
+  ]
 }

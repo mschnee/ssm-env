@@ -17,23 +17,23 @@ The arguments assume that you are using SSM Parameter Store with paths, e.g.
 
 
 ## Examples
-```
+```sh
 ssm-env exec "/qa/app1/" "/global/" -- node path/to/app.js
 ```
 
 Manually specifying
-```
+```sh
 ssm-env exec --awsAccessKeyId=yourkey --awsSecretAccessKey=yoursecret "/qa/app1/" "/global/" -- node path/to/app.js
 ```
 
 To simply print out the environment:
-```
+```sh
 ssm-env EXPORT "/qa/app1/" "/global/" -- node path/to/app.js
 STATIC_FILE_HOST=https://app1.static.yourdomain.com
 SOMNE_COOL_KEY=42
 ```
 
 To save it to a file:
-```
+```sh
 ssm-env EXPORT "/qa/app1/" "/global/" -- node path/to/app.js > .env
 ```
