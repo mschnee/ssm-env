@@ -51,6 +51,11 @@ const argv = yargs(envArgs.slice(2))
           type: 'boolean',
           default: false,
           describe: 'Use dotenv to load in a .env file.'
+        }).option('verbose', {
+          alias: 'v',
+          default: false,
+          type: 'boolean',
+          describe: 'See some output.'
         }).positional('prefixPaths', {
           type: 'string'
         }),
@@ -81,6 +86,11 @@ const argv = yargs(envArgs.slice(2))
           type: 'boolean',
           default: false,
           describe: 'Use dotenv to load in a .env file.'
+        }).option('verbose', {
+          alias: 'v',
+          default: false,
+          type: 'boolean',
+          describe: 'See some output.'
         }).positional('prefixPaths', {
           type: 'string'
         }),

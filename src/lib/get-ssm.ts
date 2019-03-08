@@ -4,7 +4,7 @@ export default function getSsm(argv) {
     return new AWS.SSM({
         region: argv.awsRegion,
         accessKeyId: argv.awsAccessKeyId,
-        secretAccessKey: argv.awsSecredAccessKey,
+        secretAccessKey: argv.awsSecretAccessKey,
         endpoint: argv.awsEndpoint || undefined
     });
 }

@@ -15,8 +15,14 @@ export default async function exportEnv(argv: any, command: string[]) {
         return;
     }
 
+    if (argv.verbose) {
+        console.log('About to get ssm params', paths);
+    }
     const [resultVarsOverEnv, resultNewVars] = await getParamsForPathArray(ssm, paths);
 
+    if (argv.verbose) {
+        console.log(resultNewVars);
+    }
     // borrowed from cross-env
     const proc = spawn(command[0], command.slice(1),{
             stdio: 'inherit',

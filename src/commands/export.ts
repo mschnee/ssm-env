@@ -14,8 +14,15 @@ export default async function exportEnv(argv: any) {
         return;
     }
 
+    if (argv.verbose) {
+        console.log('About to get ssm params', paths);
+    }
+
     const [resultVarsOverEnv, resultNewVars] = await getParamsForPathArray(ssm, paths);
 
+    if (argv.verbose) {
+        console.log(resultNewVars);
+    }
     const resultVars = argv.newEnv ? resultNewVars : resultVarsOverEnv;
     writeDotenv(resultVars);
 }
