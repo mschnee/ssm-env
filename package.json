@@ -1,6 +1,6 @@
 {
   "name": "@mschnee/ssm-env",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Get your environment variables from SSM",
   "main": "dist/index.js",
   "scripts": {
