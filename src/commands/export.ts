@@ -33,7 +33,7 @@ function writeJson(o: Object) {
 
 function writeDotenv(o: Object) {
     for (let key in o) {
-        process.stdout.write(`${key}=${o[key]}\n`);
+        process.stdout.write(`${key}=${JSON.stringify(o[key])}\n`);
     }
     process.stdout.write('\n');
 }
